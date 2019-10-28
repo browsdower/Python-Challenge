@@ -4,15 +4,14 @@ import csv
 #provide attributes and it will create
 csvpath = os.path.join("..", "PyBank", "budget_data.csv")
 
-print(csvpath)
 
-# with open(budget_data.csv, newline="") as csvpath:
-#     csv_reader = csv.reader(csvpath, delimiter=",")
+with open(csvpath, newline="") as csvfile:
+    csvreader = csv.reader(csvfile, delimiter=",")
 
+    print(csvreader) 
 
+    csv_header = next(csvreader)
+    print(f"CSV Header: {csv_header}")
 
-#     csv_header = next(csv_reader)
-#     print(f"CSV Header: {csv_header}")
-
-#     for row in csvreader:
-#         print(row)
+    for row in csvreader:
+        print(row)
