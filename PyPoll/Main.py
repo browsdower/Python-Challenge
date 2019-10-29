@@ -15,3 +15,7 @@ with open(csvpath, newline="") as csvfile:
 
     for row in csvreader:
         print(row)
+
+months = []
+total_months = len(months)
+
