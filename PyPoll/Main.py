@@ -1,15 +1,17 @@
 import os
 import csv
 
-#how to define the folder path?
-#provide attributes and it will create
+
+#provide path to retrive csv data file 
 csvpath = os.path.join("..", "PyPoll", "election_data.csv")
 
-votes = []
-candidate = []
+#set empty vatiables for data
+votes = 0
+candidate_name = []
+candidate_votes = []
  
 
-
+#run open and read the file with header
 with open(csvpath, newline="") as csvfile:
     csvreader = csv.reader(csvfile, delimiter=",")
 
@@ -18,43 +20,92 @@ with open(csvpath, newline="") as csvfile:
     csv_header = next(csvreader)
     print(f"CSV Header: {csv_header}")
 
-    for row in csvreader:
-        print(row)
+candidate_totals = {}
 
-        votes.append(row[0])
+for row in csvreader:
+    candidate_new = (row[2])
+    if candidate_new in candidate_totals:
+        candidate_totals[candidate_name] += 1
+    else:
+        candidate_totals[candidate_name] = 1
+
+print(f'Total votes {votes}')
+print(f'Each candidate: {candidate_totals}')
+
+
+pct = []
+max_votes = candidate_votes[0]
+max_index = 0
+
+for x in range(len(candidate_name)):
+    #calculation to get the percentage, x is the looper value
+    vote_pct = round(candidate_votes[x]/votes*100, 2)
+    pct.append(vote_pct)
+    
+    if candidate_votes[x] > max_votes:
+        max_votes = candidate_votes[x]
+        max_index = x
+
+election_winner = candidate_name[max_index] 
+
+print(f'Vote count for each candidate: {candidate_votes}')
+print(f'Max votes: {max_votes}')
+print(f'Election winner: {election_winner}')
+
+for x in range(len(candidate_name)):
+    print(f'{candidate_name[x]} : {pct[x]}% ({candidate_votes[x]})')
+
+
+
+#format csv data into list
+#     for row in csvreader:
+#         print(row)
+
+#         votes.append(row[0])
         
-# correy_votes = votes[0]
-# o_tooley_votes = votes[0]
-# li_votes = votes[0]
-# kahn_votes = votes[0]
+# # correy_votes = votes[0]
+# # o_tooley_votes = votes[0]
+# # li_votes = votes[0]
+# # kahn_votes = votes[0]
 
-    for row in csvreader:
-        candidate.append(row[2])
+#     for row in csvreader:
+#         candidate.append(row[2])
 
-    candidate_count = [[x,candidate.count(x)] for x in set(candidate)]
+# candidate_list = []
+
+# candidate_names = ["Correy", "O_Tooley", "Li", "Kahn"]
+
+# candidate_list.append(candidate_names + 1)
+
+
+# def countLi(csvreader, Li): 
+#     return lst.count(Li) 
+  
+# # Driver Code 
+# lst = [8, 6, 8, 10, 8, 20, 10, 8, 8] 
+# x = 8
+# print(f''
+
+    # name = []
     
+    # for row in candidate_count:
+    #     name.append(row[0])
+    #     votes.append(row[1])
 
-    name = []
-    
-    for row in candidate_count:
-        name.append(row[0])
-        votes.append(row[1])
+    # candidate_zip = zip(name, votes)
+    # candidate_list = list(candidate_zip)
 
-    candidate_zip = zip(name, votes)
-    candidate_list = list(candidate_zip)
+    # winner = max(votes)
 
-    winner = max(votes)
+    # for row in candidate_list:
+    #     if row[1] == winner:
+    #         winner_name = row[0]       
 
-    for row in candidate_list:
-        if row[1] == winner:
-            winner_name = row[0]       
 
-#use len to get total amount of votes           
-total_votes = len(votes)
 
-correy_total = candidate.count('Correy')
-correy_percent = correy_total / total_votes
-print(f'Correy Total: {correy_total} with {correy_percent}%')
+# correy_total = candidate_list.count('Correy')
+# correy_percent = correy_total / total_votes
+# print(f'Correy Total: {correy_total} with {correy_percent}%')
 
 # o_tooley_total = candidate.count("O'Tooley")
 # o_tooley_percent = o_tooley_total / total_votes
@@ -65,12 +116,16 @@ print(f'Correy Total: {correy_total} with {correy_percent}%')
 # khan_total = candidate.count('Khan')
 # khan_percent = khan_total / total_votes
 
+
+#use len to get total amount of votes           
+# total_votes = len(votes)
+
 #begin summary headers
 print("Total Results:")
 
 #print total votes
-print(f'Total Votes: {total_votes}')
-print(f'Winner is {winner}')
+# print(f'Total Votes: {total_votes}')
+# print(f'Winner is {winner}')
 
 # Finding the maximum value to determine the winner
 # candidate_votes = [correy_votes, o_tooley_votes, li_votes, kahn_votes]
